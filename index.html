@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#1e1b4b"/>
+  <meta name="description" content="GSS Gadau Online Examination System"/>
+  <title>GSS Gadau Exam Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:#f8f7ff;color:#1e1b4b;line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;font-family:inherit;border:none;outline:none}
+    input,select,textarea{font-family:inherit}
+    :root{
+      --primary:#1e1b4b;--primary-mid:#312e81;--primary-light:#4338ca;--primary-pale:#eef2ff;
+      --accent:#f59e0b;--accent-light:#fcd34d;--emerald:#10b981;--rose:#f43f5e;--sky:#0ea5e9;--violet:#8b5cf6;
+      --bg:#f8f7ff;--bg-card:#ffffff;--bg-subtle:#eef2ff;--bg-dark:#0f0e23;--bg-dark-card:#1a1836;
+      --text:#1e1b4b;--text-2:#4b5563;--text-3:#9ca3af;
+      --border:#e0e7ff;--border-2:#c7d2fe;
+      --shadow:0 4px 16px rgba(30,27,75,0.09);--shadow-lg:0 8px 32px rgba(30,27,75,0.14);
+      --r:12px;--r-lg:20px;--r-xl:28px;
+      --font:'Plus Jakarta Sans',sans-serif;--font-d:'Fraunces',serif;--t:180ms ease
+    }
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:var(--bg-subtle)}
+    ::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
+    .page{animation:fadeUp .4s ease both}
+    .container{max-width:1280px;margin:0 auto;padding:0 24px}
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+    .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--r);font-size:14px;font-weight:600;transition:all var(--t);white-space:nowrap}
+    .btn-primary{background:var(--primary-light);color:#fff;box-shadow:0 2px 8px rgba(67,56,202,.28)}
+    .btn-primary:hover{background:var(--primary-mid);transform:translateY(-1px);box-shadow:0 4px 16px rgba(67,56,202,.36)}
+    .btn-accent{background:var(--accent);color:var(--primary);box-shadow:0 2px 8px rgba(245,158,11,.28)}
+    .btn-ghost{background:var(--bg-subtle);color:var(--text);border:1px solid var(--border)}
+    .btn-ghost:hover{background:var(--border)}
+    .btn-danger{background:var(--rose);color:#fff}
+    .btn-danger:hover{background:#e11d48}
+    .btn-success{background:var(--emerald);color:#fff}
+    .btn-sm{padding:6px 14px;font-size:13px}
+    .btn-lg{padding:13px 28px;font-size:15px;border-radius:var(--r-lg)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-label{font-size:12px;font-weight:700;color:var(--text-2);letter-spacing:.5px;text-transform:uppercase}
+    .form-input{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg-card);font-size:14px;color:var(--text);transition:border-color var(--t),box-shadow var(--t);width:100%}
+    .form-input:focus{outline:none;border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(67,56,202,.1)}
+    .form-input::placeholder{color:var(--text-3)}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;background-size:15px;padding-right:38px}
+    textarea.form-input{resize:vertical;min-height:90px}
+    .badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+    .badge-draft{background:#f3f4f6;color:#6b7280}
+    .badge-published{background:#eff6ff;color:#2563eb}
+    .badge-active{background:#ecfdf5;color:#059669}
+    .badge-completed{background:#f5f3ff;color:#7c3aed}
+    .badge-archived{background:#fff7ed;color:#c2410c}
+    .badge-success{background:#ecfdf5;color:#059669}
+    .badge-warning{background:#fffbeb;color:#b45309}
+    .badge-danger{background:#fff1f2;color:#be123c}
+    .badge-info{background:#eff6ff;color:#2563eb}
+    .badge-exam{background:#f5f3ff;color:#7c3aed}
+    .table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--border)}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead tr{background:var(--bg-subtle)}
+    th{padding:11px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-2);white-space:nowrap}
+    td{padding:13px 16px;border-top:1px solid var(--border)}
+    tbody tr:hover{background:var(--bg-subtle)}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;position:relative;overflow:hidden;transition:transform var(--t),box-shadow var(--t)}
+    .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+    .spinner{width:22px;height:22px;border:3px solid var(--border);border-top-color:var(--primary-light);border-radius:50%;animation:spin .75s linear infinite}
+    .spinner-lg{width:40px;height:40px;border-width:4px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    @media(max-width:768px){.container{padding:0 16px}.card{padding:16px;border-radius:var(--r)}.hide-mobile{display:none!important}.main-offset{margin-left:0!important}}
+    @media(min-width:769px){.hide-desktop{display:none!important}}
+    #root{min-height:100vh}
+  </style>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <script type="module" src="/App.jsx"></script>
+</body>
+</html>
