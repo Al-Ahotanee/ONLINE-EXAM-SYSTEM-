@@ -667,9 +667,8 @@ function QuestionBank({embedded=false,onImport=null,examId=null}) {
   const toggleSel=id=>{ setSelected(s=>{ const n=new Set(s); n.has(id)?n.delete(id):n.add(id); return n; }); };
   const doImport=async()=>{ if(!selected.size) return toast.error('Select at least one question'); setImporting(true); try{ const d=await api.post('/question-bank-import',{exam_id:examId,question_ids:[...selected]}); toast.success(`${d.imported} questions imported!`); setSelected(new Set()); onImport?.(); }catch(e){toast.error(e.message);}finally{setImporting(false);} };
   const typeBadge=t=>({mcq:<Badge color="blue">MCQ</Badge>,true_false:<Badge color="purple">T/F</Badge>,short_answer:<Badge color="amber">Short</Badge>})[t]||null;
-  const wrap = embedded ? ({children})=><div>{children}</div> : ({children})=><div className="animate-fadeup">{children}</div>;
   return (
-    <wrap.type>
+    <div className={embedded ? '' : 'animate-fadeup'}>
       {!embedded&&<PageHeader title="Question Bank" sub={`${total} questions stored`} action={<Btn icon={Plus} onClick={()=>{setForm(QEMPTY);setModal('new');}}>Add Question</Btn>}/>}
       {embedded&&<div className="flex items-center justify-between mb-3"><h3 className="font-bold text-primary-950 flex items-center gap-2"><Database size={15}/>Question Bank — Select to Import</h3><div className="flex gap-2">{selected.size>0&&<Btn icon={Upload} size="sm" variant="amber" onClick={doImport} disabled={importing}>{importing?<Spinner/>:`Import ${selected.size} Selected`}</Btn>}<Btn icon={Plus} size="sm" onClick={()=>{setForm(QEMPTY);setModal('new');}}>New Question</Btn></div></div>}
       {/* Filters */}
@@ -713,7 +712,7 @@ function QuestionBank({embedded=false,onImport=null,examId=null}) {
           <div className="flex gap-3 justify-end pt-2"><Btn variant="ghost" onClick={()=>setModal(null)}>Cancel</Btn><Btn type="submit" disabled={saving||(form.question_type==='mcq'&&!form.correct_answer)}>{saving?<Spinner/>:modal==='new'?'Add to Bank':'Save'}</Btn></div>
         </form>
       </Modal>}
-    </wrap.type>
+    </div>
   );
 }
 
